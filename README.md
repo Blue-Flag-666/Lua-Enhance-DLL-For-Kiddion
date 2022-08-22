@@ -24,3 +24,5 @@ BF.system(string)		-- 执行命令
 BF.requireAllLibs()		-- 启用全部 lua 自带库
 						-- Enable all lua libraries
 ```
+注意: 虽然 `getch`、`getchar`、`getline` 会等待输入，但可能会读取空行或换行符 ('\n')
+Note: Although `getch`, `getchar` and `getline` will wait for input, they may read blank lines or line breaks ('\n')
