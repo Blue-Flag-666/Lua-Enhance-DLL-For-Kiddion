@@ -17,6 +17,8 @@ BF = require "BF"
 ## APIs
 
 ```lua
+BF.version() 			-- 输出版本信息
+	BF.about()			-- Print version info
 BF.print(string)		-- 输出 string, 不附加换行
 						-- Print the string without line break
 BF.read()				-- 读取控制台输入, 返回 string

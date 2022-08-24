@@ -1,5 +1,15 @@
 ﻿#include "pch.h"
 
+static int about(lua_State *L)
+{
+	cout << R"(
+Lua Enhance DLL For Kiddion v1.0.2
+Github:	 Galaxy-Studio-Code/Lua-Enhance-DLL-For-Kiddion
+Discord: Blue-Flag#5246
+)";
+	return 1;
+}
+
 static int read(lua_State* L)
 {
 	string s;
@@ -65,6 +75,8 @@ static int AllocCon(lua_State* L)
 
 static const luaL_Reg BF[] =
 {
+	{ "version", about },
+	{ "about", about },
 	{ "read", read },
 	{ "print", print },
 	{ "getch", getc },
