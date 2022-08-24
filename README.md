@@ -31,6 +31,8 @@ BF.system(string)		-- 执行命令
 						-- Execute a command
 BF.requireAllLibs()		-- 启用全部 lua 自带库
 						-- Enable all lua libraries
+BF.AllocCon()			-- 呼出控制台
+						-- Allocate Console
 ```
 
 注意: 虽然 `getch`、`getchar`、`getline` 会等待输入，但可能会读取空行或换行符 ('\n')

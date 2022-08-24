@@ -35,7 +35,7 @@ static int getch(lua_State* L)
 static int getl(lua_State* L)
 {
 	string s;
-	getline(cin,s);
+	getline(cin, s);
 	lua_pushstring(L, s.c_str());
 	return 1;
 }
@@ -53,6 +53,16 @@ static int requireAllLibs(lua_State* L)
 	return 1;
 }
 
+static int AllocCon(lua_State* L)
+{
+	AllocConsole();
+	FILE* stream;
+	freopen_s(&stream, "CON", "r", stdin);		// NOLINT(cert-err33-c)
+	freopen_s(&stream, "CON", "w", stdout);		// NOLINT(cert-err33-c)
+	freopen_s(&stream, "CON", "w", stderr);		// NOLINT(cert-err33-c)
+	return 1;
+}
+
 static const luaL_Reg BF[] =
 {
 	{ "read", read },
@@ -62,6 +72,7 @@ static const luaL_Reg BF[] =
 	{ "getline", getl },
 	{ "system", sysdo },
 	{ "requireAllLibs", requireAllLibs },
+	{ "AllocCon", AllocCon },
 	{ nullptr, nullptr }
 };
 

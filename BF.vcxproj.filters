@@ -121,6 +121,9 @@
     <None Include="include\lua54.dll">
       <Filter>头文件\include</Filter>
     </None>
+    <None Include="README.md">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Library Include="include\lua54.lib">

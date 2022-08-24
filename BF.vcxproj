@@ -129,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="include\lua54.dll" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="include\lua54.lib" />
