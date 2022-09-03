@@ -50,29 +50,6 @@ static int getl(lua_State* L)
 	return 1;
 }
 
-static int sysdo(lua_State* L)
-{
-	const string command = luaL_tolstring(L, 1, nullptr);
-	system(command.c_str());  // NOLINT(concurrency-mt-unsafe)
-	return 1;
-}
-
-static int requireAllLibs(lua_State* L)
-{
-	luaL_openlibs(L);
-	return 1;
-}
-
-static int AllocCon(lua_State* L)
-{
-	AllocConsole();
-	FILE* stream;
-	freopen_s(&stream, "CON", "r", stdin);		// NOLINT(cert-err33-c)
-	freopen_s(&stream, "CON", "w", stdout);		// NOLINT(cert-err33-c)
-	freopen_s(&stream, "CON", "w", stderr);		// NOLINT(cert-err33-c)
-	return 1;
-}
-
 static void CloseM()
 {
 	if (MapName.empty())
@@ -103,10 +80,6 @@ static int OpenMap(lua_State* L)
 	if (!MapName.ends_with(".dat"))
 	{
 		MapName = MapName + ".dat";
-	}
-	if (!MapName.starts_with(".\\BF\\"))
-	{
-		MapName = ".\\BF\\" + MapName;
 	}
 	cout << "renamed to " << MapName << endl;
 	ifstream           fin(MapName, ios_base::in | ios_base::binary);
@@ -140,6 +113,29 @@ static int SetMap(lua_State* L)
 	return 1;
 }
 
+static int sysdo(lua_State* L)
+{
+	const string command = luaL_tolstring(L, 1, nullptr);
+	system(command.c_str());  // NOLINT(concurrency-mt-unsafe)
+	return 1;
+}
+
+static int requireAllLibs(lua_State* L)
+{
+	luaL_openlibs(L);
+	return 1;
+}
+
+static int AllocCon(lua_State* L)
+{
+	AllocConsole();
+	FILE* stream;
+	freopen_s(&stream, "CON", "r", stdin);		// NOLINT(cert-err33-c)
+	freopen_s(&stream, "CON", "w", stdout);		// NOLINT(cert-err33-c)
+	freopen_s(&stream, "CON", "w", stderr);		// NOLINT(cert-err33-c)
+	return 1;
+}
+
 static constexpr luaL_Reg BF[] =
 {
 	{ "version", about },
@@ -149,14 +145,14 @@ static constexpr luaL_Reg BF[] =
 	{ "getch", getc },
 	{ "getchar", getch },
 	{ "getline", getl },
-	{ "system", sysdo },
-	{ "requireAllLibs", requireAllLibs },
-	{ "AllocCon", AllocCon },
 	{ "OpenMap", OpenMap },
 	{ "CloseMap", CloseMap },
 	{ "IsMapOpen", IsMapOpen },
 	{ "GetMap", GetMap },
 	{ "SetMap", SetMap },
+	{ "system", sysdo },
+	{ "requireAllLibs", requireAllLibs },
+	{ "AllocCon", AllocCon },
 	{ nullptr, nullptr }
 };
 
