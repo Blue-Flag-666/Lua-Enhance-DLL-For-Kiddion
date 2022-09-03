@@ -14,22 +14,25 @@
 #endif
 
 // 添加要在此处预编译的标头
-#include "framework.h"
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <map>
 #include <string>
-
-extern "C"
-{
-	#include "include\lua.hpp"
-}
+#include "framework.h"
+#include "include\lua.hpp"
 
 using std::cin;
 using std::cout;
 using std::endl;
-using std::string;
 using std::ifstream;
+using std::ios_base;
+using std::map;
 using std::ofstream;
-using std::ios;
+using std::pair;
+using std::string;
+using std::to_string;
+
+inline map <string, int> m;
+inline string            MapName;
 
 #endif //PCH_H

@@ -1,9 +1,9 @@
 ﻿#include "pch.h"
 
-static int about(lua_State *L)
+static int about(lua_State* L)
 {
 	cout << R"(
-Lua Enhance DLL For Kiddion v1.0.2
+Lua Enhance DLL For Kiddion v1.0.3
 Github:	 Galaxy-Studio-Code/Lua-Enhance-DLL-For-Kiddion
 Discord: Blue-Flag#5246
 )";
@@ -35,7 +35,7 @@ static int getc(lua_State* L)
 
 static int getch(lua_State* L)
 {
-	char c[2];
+	char c[2] = { 0 };
 	cin.get(c[0]);
 	c[1] = '\0';
 	lua_pushstring(L, c);
@@ -73,18 +73,90 @@ static int AllocCon(lua_State* L)
 	return 1;
 }
 
-static const luaL_Reg BF[] =
+static void CloseM()
+{
+	if (MapName.empty())
+	{
+		return;
+	}
+	ofstream fout(MapName, ios_base::out | ios_base::trunc | ios_base::binary);
+	for (const auto& [fst, snd] : m)
+	{
+		pair tmp { fst, snd };
+		fout.write(reinterpret_cast <char*>(&tmp), sizeof tmp);
+	}
+	fout.close();
+	MapName.clear();
+	m.clear();
+}
+
+static int CloseMap(lua_State* L)
+{
+	CloseM();
+	return 1;
+}
+
+static int OpenMap(lua_State* L)
+{
+	CloseM();
+	MapName = luaL_tolstring(L, 1, nullptr);
+	if (!MapName.ends_with(".dat"))
+	{
+		MapName = MapName + ".dat";
+	}
+	if (!MapName.starts_with(".\\BF\\"))
+	{
+		MapName = ".\\BF\\" + MapName;
+	}
+	cout << "renamed to " << MapName << endl;
+	ifstream           fin(MapName, ios_base::in | ios_base::binary);
+	pair <string, int> tmp;
+	while (fin.read(reinterpret_cast <char*>(&tmp), sizeof tmp))
+	{
+		m[tmp.first] = tmp.second;
+	}
+	fin.close();
+	return 1;
+}
+
+static int IsMapOpen(lua_State* L)
+{
+	lua_pushboolean(L, !MapName.empty());
+	return 1;
+}
+
+static int GetMap(lua_State* L)
+{
+	const string name = luaL_tolstring(L, 1, nullptr);
+	lua_pushinteger(L, m[name]);
+	return 1;
+}
+
+static int SetMap(lua_State* L)
+{
+	const string name = luaL_tolstring(L, 1, nullptr);
+	const int    key  = lua_tointeger(L, 2);
+	m[name]           = key;
+	return 1;
+}
+
+static constexpr luaL_Reg BF[] =
 {
 	{ "version", about },
 	{ "about", about },
-	{ "read", read },
 	{ "print", print },
+	{ "read", read },
 	{ "getch", getc },
 	{ "getchar", getch },
 	{ "getline", getl },
 	{ "system", sysdo },
 	{ "requireAllLibs", requireAllLibs },
 	{ "AllocCon", AllocCon },
+	{ "OpenMap", OpenMap },
+	{ "CloseMap", CloseMap },
+	{ "IsMapOpen", IsMapOpen },
+	{ "GetMap", GetMap },
+	{ "SetMap", SetMap },
 	{ nullptr, nullptr }
 };
 
