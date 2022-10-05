@@ -18,7 +18,7 @@ BF = require "BF"
 
 ```lua
 void BF.version() 						-- 输出版本信息
-	void BF.about()						-- Print version info\
+	void BF.about()						-- Print version info
 
 -- IO
 void BF.print(string text)				-- 输出 string, 不附加换行
