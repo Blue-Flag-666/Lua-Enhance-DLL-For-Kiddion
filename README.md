@@ -32,7 +32,7 @@ string BF.getchar()						-- 读取一个字符, 返回长度为 2 的 string, �
 string BF.getline()						-- 读取一整行
 										-- Read the whole line
 
--- Map	可用于在不同脚本中传递数据  Can be used to transfer data in different scripts
+-- Map	可用于在不同脚本中传递数据  Transfer data in different scripts
 void BF.OpenMap(string name)			-- 打开一个 map, 这将关闭已打开的 map
 										-- Open a map, this will close the map which has been opened
 void BF.CloseMap()						-- 关闭已打开的 map
