@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 
 static int about(lua_State* L)
 {
